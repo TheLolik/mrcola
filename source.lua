@@ -24,14 +24,14 @@ local DropShadowHolder = Instance.new("Frame")
 local DropShadow = Instance.new("ImageLabel")
 
 mrcola.Name = "mrcola"
-mrcola.Parent = game:GetService("CoreGui")
+mrcola.Parent = game:GetService("CoreGui").RobloxGui
 
 main.Name = "main"
 main.Parent = mrcola
 main.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 main.BackgroundTransparency = 1.000
 main.Position = UDim2.new(0.362917393, 0, 0.339682549, 0)
-main.Size = UDim2.new(0, 312, 0, 177)
+main.Size = UDim2.new(0, 312, 0, 265)
 main.Active = true
 main.Draggable = true
 
@@ -60,7 +60,7 @@ amount.Name = "amount"
 amount.Parent = ui
 amount.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 amount.BorderSizePixel = 0
-amount.Position = UDim2.new(0.0192307699, 0, 0.140957832, 0)
+amount.Position = UDim2.new(0.0189999994, 0, 0.0920000002, 0)
 amount.Size = UDim2.new(0, 300, 0, 25)
 amount.Font = Enum.Font.Gotham
 amount.PlaceholderText = "Dupe Amount"
@@ -71,9 +71,6 @@ amount.TextSize = 13.000
 UICorner_2.CornerRadius = UDim.new(0, 4)
 UICorner_2.Parent = amount
 
-dupping = false
-stopped = false
-item = "BloxyCola"
 dupe.Name = "dupe"
 dupe.Parent = ui
 dupe.BackgroundColor3 = Color3.fromRGB(93, 79, 66)
@@ -84,6 +81,9 @@ dupe.Font = Enum.Font.Gotham
 dupe.Text = "Dupe"
 dupe.TextColor3 = Color3.fromRGB(255, 255, 255)
 dupe.TextSize = 13.000
+dupping = false
+stopped = false
+item = "BloxyCola"
 dupe.MouseButton1Click:Connect(function()
 	if dupe.Text ~= "Stop Dupe" then
 		dupe.Text = "Stop Dupe"
@@ -176,7 +176,7 @@ title2.Font = Enum.Font.Gotham
 title2.Text = "Cola"
 title2.TextColor3 = Color3.fromRGB(93, 79, 66)
 title2.TextSize = 13.000
-	
+
 udupe.Name = "udupe"
 udupe.Parent = ui
 udupe.BackgroundColor3 = Color3.fromRGB(93, 79, 66)
@@ -260,30 +260,6 @@ end)
 UICorner_4.CornerRadius = UDim.new(0, 4)
 UICorner_4.Parent = udupe
 
-count.Name = "count"
-count.Parent = ui
-count.BackgroundColor3 = Color3.fromRGB(93, 79, 66)
-count.BorderSizePixel = 0
-count.Position = UDim2.new(0.0189999994, 0, 0, 144)
-count.Size = UDim2.new(0, 300, 0, 25)
-count.Font = Enum.Font.Gotham
-count.Text = "Count Colas"
-count.TextColor3 = Color3.fromRGB(255, 255, 255)
-count.TextSize = 13.000
-count.MouseButton1Click:Connect(function()
-	local c = 0
-	game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid"):UnequipTools()
-	for _,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
-		if v.Name == item then
-			c = c + 1
-		end
-	end
-	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack({[1] = tostring(c).." Colas",[2] = "All"}))
-end)
-
-UICorner_5.CornerRadius = UDim.new(0, 4)
-UICorner_5.Parent = count
-
 ddupe.Name = "ddupe"
 ddupe.Parent = ui
 ddupe.BackgroundColor3 = Color3.fromRGB(93, 79, 66)
@@ -357,6 +333,7 @@ end)
 UICorner_6.CornerRadius = UDim.new(0, 4)
 UICorner_6.Parent = ddupe
 
+
 dcolas.Name = "dcolas"
 dcolas.Parent = ui
 dcolas.BackgroundColor3 = Color3.fromRGB(93, 79, 66)
@@ -367,6 +344,23 @@ dcolas.Font = Enum.Font.Gotham
 dcolas.Text = "Drop Colas"
 dcolas.TextColor3 = Color3.fromRGB(255, 255, 255)
 dcolas.TextSize = 13.000
+dcolas.MouseButton1Click:Connect(function()
+	for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+		if v:IsA("Tool") then
+			if v.Name == item then
+				v.Parent = game:GetService("Players").LocalPlayer.Character
+			end
+		end
+	end
+	wait()
+	for i,v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
+		if v:IsA("Tool") then
+			if v.Name == item then
+				v.Parent = workspace
+			end
+		end
+	end
+end)
 
 UICorner_5.CornerRadius = UDim.new(0, 4)
 UICorner_5.Parent = dcolas
@@ -381,6 +375,16 @@ scolas.Font = Enum.Font.Gotham
 scolas.Text = "Steal Colas"
 scolas.TextColor3 = Color3.fromRGB(255, 255, 255)
 scolas.TextSize = 13.000
+scolas.MouseButton1Click:Connect(function()
+	local hum = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
+	for _, v in ipairs(workspace:GetChildren()) do
+		if game:GetService("Players").LocalPlayer.Character and v:IsA("BackpackItem") and v:FindFirstChild("Handle") then
+			if v.Name == item then
+				hum:EquipTool(v)
+			end
+		end
+	end
+end)
 
 UICorner_7.CornerRadius = UDim.new(0, 4)
 UICorner_7.Parent = scolas
@@ -395,9 +399,80 @@ cspam.Font = Enum.Font.Gotham
 cspam.Text = "Colas Spam"
 cspam.TextColor3 = Color3.fromRGB(255, 255, 255)
 cspam.TextSize = 13.000
+cspam.MouseButton1Click:Connect(function()
+	local hum = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
+	for _, v in ipairs(workspace:GetChildren()) do
+		if game:GetService("Players").LocalPlayer.Character and v:IsA("BackpackItem") and v:FindFirstChild("Handle") then
+			if v.Name == item then
+				hum:EquipTool(v)
+			end
+		end
+	end
+	wait()
+	for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+		if v:IsA("Tool") then
+			if v.Name == item then
+				v.Parent = game:GetService("Players").LocalPlayer.Character
+			end
+		end
+	end
+	wait()
+	for _,v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
+		if v:IsA("Tool") then
+			if v.Name == item then
+				for i,c in pairs(v:GetDescendants()) do
+					if c:IsA("SpecialMesh") then
+						c:Destroy()
+					end
+				end
+			end
+		end
+	end
+	wait()
+	local c = game:GetService("Players").LocalPlayer.Character
+
+	for _,v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
+		if v:IsA("Tool") then
+			if v.Name == item then
+				spawn(function()
+					while game:GetService("Players").LocalPlayer.Character do
+						wait()
+						v:FindFirstChild("Handle").CanCollide = true
+					end
+				end)
+			end
+		end
+	end
+	
+	c["Right Arm"]:Destroy()
+end)
 
 UICorner_8.CornerRadius = UDim.new(0, 4)
 UICorner_8.Parent = cspam
+
+count.Name = "count"
+count.Parent = ui
+count.BackgroundColor3 = Color3.fromRGB(93, 79, 66)
+count.BorderSizePixel = 0
+count.Position = UDim2.new(0.0189999994, 0, 0, 234)
+count.Size = UDim2.new(0, 300, 0, 25)
+count.Font = Enum.Font.Gotham
+count.Text = "Count Colas"
+count.TextColor3 = Color3.fromRGB(255, 255, 255)
+count.TextSize = 13.000
+count.MouseButton1Click:Connect(function()
+	local c = 0
+	game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid"):UnequipTools()
+	for _,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+		if v.Name == item then
+			c = c + 1
+		end
+	end
+	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack({[1] = tostring(c).." Colas",[2] = "All"}))
+end)
+
+UICorner_9.CornerRadius = UDim.new(0, 4)
+UICorner_9.Parent = count
 
 DropShadowHolder.Name = "DropShadowHolder"
 DropShadowHolder.Parent = main
