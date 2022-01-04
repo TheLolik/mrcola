@@ -435,10 +435,17 @@ cspam.MouseButton1Click:Connect(function()
 		if v:IsA("Tool") then
 			if v.Name == item then
 				spawn(function()
-					while game:GetService("Players").LocalPlayer.Character do
-						wait()
-						v:FindFirstChild("Handle").CanCollide = true
-					end
+					h = game:GetService("RunService").RenderStepped:Connect(function()
+						if v:FindFirstChild("Handle") then
+							if game:GetService("Players").LocalPlayer.Character then
+								v.Handle.CanCollide = true
+							else
+								h:Disconnect()
+							end
+						else
+							h:Disconnect()
+						end
+					end)
 				end)
 			end
 		end
