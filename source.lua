@@ -199,6 +199,13 @@ udupe.MouseButton1Click:Connect(function()
 				game:GetService("Workspace").Handle.CFrame = game.Players.LocalPlayer.Character.Head.CFrame
 			end
 		end)
+		local p = workspace.DPxxPzsK7N:Clone()
+		local lastcf = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+		p.CFrame = workspace.DPxxPzsK7N.CFrame * CFrame.new(Vector3.new(0,50,0))
+		p.Transparency = 1
+		p.Parent = workspace
+		game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = p.CFrame * CFrame.new(Vector3.new(200,20,200))
+		wait(0.5)
 		for i=1,tonumber(amount.Text) do
 			if stopped ~= true then
 				local hum = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
@@ -235,6 +242,8 @@ udupe.MouseButton1Click:Connect(function()
 			end
 		end
 		equip()
+		p:Destroy()
+		game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = lastcf
 		wait(0.25)
 		dupping = false
 		stopped = true
