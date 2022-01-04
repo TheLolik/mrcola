@@ -10,10 +10,16 @@ local UICorner_3 = Instance.new("UICorner")
 local title2 = Instance.new("TextLabel")
 local udupe = Instance.new("TextButton")
 local UICorner_4 = Instance.new("UICorner")
-local count = Instance.new("TextButton")
+local dcolas = Instance.new("TextButton")
 local UICorner_5 = Instance.new("UICorner")
 local ddupe = Instance.new("TextButton")
 local UICorner_6 = Instance.new("UICorner")
+local scolas = Instance.new("TextButton")
+local UICorner_7 = Instance.new("UICorner")
+local cspam = Instance.new("TextButton")
+local UICorner_8 = Instance.new("UICorner")
+local count = Instance.new("TextButton")
+local UICorner_9 = Instance.new("UICorner")
 local DropShadowHolder = Instance.new("Frame")
 local DropShadow = Instance.new("ImageLabel")
 
@@ -350,6 +356,48 @@ end)
 
 UICorner_6.CornerRadius = UDim.new(0, 4)
 UICorner_6.Parent = ddupe
+
+dcolas.Name = "dcolas"
+dcolas.Parent = ui
+dcolas.BackgroundColor3 = Color3.fromRGB(93, 79, 66)
+dcolas.BorderSizePixel = 0
+dcolas.Position = UDim2.new(0.0189999994, 0, 0, 144)
+dcolas.Size = UDim2.new(0, 300, 0, 25)
+dcolas.Font = Enum.Font.Gotham
+dcolas.Text = "Drop Colas"
+dcolas.TextColor3 = Color3.fromRGB(255, 255, 255)
+dcolas.TextSize = 13.000
+
+UICorner_5.CornerRadius = UDim.new(0, 4)
+UICorner_5.Parent = dcolas
+
+scolas.Name = "scolas"
+scolas.Parent = ui
+scolas.BackgroundColor3 = Color3.fromRGB(93, 79, 66)
+scolas.BorderSizePixel = 0
+scolas.Position = UDim2.new(0.0189999994, 0, 0, 174)
+scolas.Size = UDim2.new(0, 300, 0, 25)
+scolas.Font = Enum.Font.Gotham
+scolas.Text = "Steal Colas"
+scolas.TextColor3 = Color3.fromRGB(255, 255, 255)
+scolas.TextSize = 13.000
+
+UICorner_7.CornerRadius = UDim.new(0, 4)
+UICorner_7.Parent = scolas
+
+cspam.Name = "cspam"
+cspam.Parent = ui
+cspam.BackgroundColor3 = Color3.fromRGB(93, 79, 66)
+cspam.BorderSizePixel = 0
+cspam.Position = UDim2.new(0.0189999994, 0, 0, 204)
+cspam.Size = UDim2.new(0, 300, 0, 25)
+cspam.Font = Enum.Font.Gotham
+cspam.Text = "Colas Spam"
+cspam.TextColor3 = Color3.fromRGB(255, 255, 255)
+cspam.TextSize = 13.000
+
+UICorner_8.CornerRadius = UDim.new(0, 4)
+UICorner_8.Parent = cspam
 
 DropShadowHolder.Name = "DropShadowHolder"
 DropShadowHolder.Parent = main
