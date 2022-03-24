@@ -1,3 +1,13 @@
+local speed = 0.25
+
+if gethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius") < math.huge then
+	game:GetService("RunService").Heartbeat:Connect(function()
+		sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
+		sethiddenproperty(game:GetService("Players").LocalPlayer,"MaxSimulationRadius",math.huge)
+	end)
+end
+
+local hcf = game:GetService("Workspace").Handle.CFrame
 local mrcola = Instance.new("ScreenGui")
 local main = Instance.new("Frame")
 local ui = Instance.new("Frame")
@@ -102,7 +112,7 @@ dupe.MouseButton1Click:Connect(function()
 				game:GetService("Workspace").Handle.CFrame = game.Players.LocalPlayer.Character.Head.CFrame
 			end
 		end)
-		for i=1,tonumber(amount.Text) do
+		for _=1,tonumber(amount.Text) or 1 do
 			if stopped ~= true then
 				local hum = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
 				local function equip()
@@ -153,6 +163,7 @@ dupe.MouseButton1Click:Connect(function()
 				equip()
 				wait(0.25)
 			else
+                game:GetService("Workspace").Handle.CFrame = hcf
 				break
 			end
 		end
@@ -212,7 +223,7 @@ udupe.MouseButton1Click:Connect(function()
 		p.Parent = workspace
 		game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = p.CFrame * CFrame.new(Vector3.new(200,20,200))
 		wait(0.5)
-		for i=1,tonumber(amount.Text) do
+		for _=1,tonumber(amount.Text) or 1 do
 			if stopped ~= true then
 				local hum = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
 				local function drop()
@@ -242,8 +253,9 @@ udupe.MouseButton1Click:Connect(function()
 					end
 				end
 				drop()
-				wait(0.25)
+				wait(speed or 0.25)
 			else
+                game:GetService("Workspace").Handle.CFrame = hcf
 				break
 			end
 		end
@@ -288,7 +300,7 @@ ddupe.MouseButton1Click:Connect(function()
 				game:GetService("Workspace").Handle.CFrame = game.Players.LocalPlayer.Character.Head.CFrame
 			end
 		end)
-		for i=1,tonumber(amount.Text) do
+		for _=1,tonumber(amount.Text) or 1 do
 			if stopped ~= true then
 				local hum = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
 				local function drop()
@@ -318,8 +330,9 @@ ddupe.MouseButton1Click:Connect(function()
 					end
 				end
 				drop()
-				wait(0.25)
+				wait(speed or 0.25)
 			else
+                game:GetService("Workspace").Handle.CFrame = hcf
 				break
 			end
 		end
@@ -396,7 +409,7 @@ cspam.BorderSizePixel = 0
 cspam.Position = UDim2.new(0.0189999994, 0, 0, 204)
 cspam.Size = UDim2.new(0, 300, 0, 25)
 cspam.Font = Enum.Font.Gotham
-cspam.Text = "Colas Spam"
+cspam.Text = "Bricks Spam"
 cspam.TextColor3 = Color3.fromRGB(255, 255, 255)
 cspam.TextSize = 13.000
 cspam.MouseButton1Click:Connect(function()
@@ -420,7 +433,7 @@ cspam.MouseButton1Click:Connect(function()
 	for _,v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
 		if v:IsA("Tool") then
 			if v.Name == item then
-				for i,c in pairs(v:GetDescendants()) do
+				for _,c in pairs(v:GetDescendants()) do
 					if c:IsA("SpecialMesh") then
 						c:Destroy()
 					end
@@ -431,27 +444,13 @@ cspam.MouseButton1Click:Connect(function()
 	wait()
 	local c = game:GetService("Players").LocalPlayer.Character
 
-	for _,v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
-		if v:IsA("Tool") then
-			if v.Name == item then
-				spawn(function()
-					h = game:GetService("RunService").RenderStepped:Connect(function()
-						if v:FindFirstChild("Handle") then
-							if game:GetService("Players").LocalPlayer.Character then
-								v.Handle.CanCollide = true
-							else
-								h:Disconnect()
-							end
-						else
-							h:Disconnect()
-						end
-					end)
-				end)
-			end
-		end
-	end
-	
-	c["Right Arm"]:Destroy()
+	if c:FindFirstChild("Right Arm") then
+	    c["Right Arm"]:Destroy()
+    else
+        c["RightUpperArm"]:Destroy()
+        c["RightLowerArm"]:Destroy()
+        c["RightHand"]:Destroy()
+    end
 end)
 
 UICorner_8.CornerRadius = UDim.new(0, 4)
@@ -475,6 +474,7 @@ count.MouseButton1Click:Connect(function()
 			c = c + 1
 		end
 	end
+    print(tostring(c).." Colas")
 	game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack({[1] = tostring(c).." Colas",[2] = "All"}))
 end)
 
@@ -501,3 +501,12 @@ DropShadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
 DropShadow.ImageTransparency = 0.500
 DropShadow.ScaleType = Enum.ScaleType.Slice
 DropShadow.SliceCenter = Rect.new(49, 49, 450, 450)
+
+local mr_cola = {}
+mr_cola["setspeed"] = function(n)
+	if typeof(n) == "number" then
+		speed = n
+	end
+end
+
+return mr_cola
